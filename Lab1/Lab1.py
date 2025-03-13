@@ -256,43 +256,46 @@ class GeneticAl:
 
 if __name__ == "__main__":
 
-    def y(x1, x2):
-        a = 1
-        b = 5.1 / (4*np.pi**2)
-        c = 5 / np.pi
-        r = 6
-        s = 10
-        t = 1 / (8*np.pi)
-        return a*(x2-b*x1**2 + c*x1-r)**2 + s*(1-t)*np.cos(x1) + s
-    GeneticAl(20, 100, 50, 0.5, [[-5, 10], [0, 15]], y, 'min', graph=True, graph_show=False, label="20_100_0.5")
-    GeneticAl(100, 40, 50, 0.5, [[-5, 10], [0, 15]], y, 'min', graph=True, graph_show=False, label="100_40_0.5")
-    GeneticAl(20, 40, 50, 1, [[-5, 10], [0, 15]], y, 'min', graph=True, graph_show=False, label="20_40_1", save_loc="./Lab1/Images/Branin Function.png")
+    # def y(x1, x2):
+    #     a = 1
+    #     b = 5.1 / (4*np.pi**2)
+    #     c = 5 / np.pi
+    #     r = 6
+    #     s = 10
+    #     t = 1 / (8*np.pi)
+    #     return a*(x2-b*x1**2 + c*x1-r)**2 + s*(1-t)*np.cos(x1) + s
+    # GeneticAl(20, 100, 50, 0.5, [[-5, 10], [0, 15]], y, 'min', graph=True, graph_show=False, label="20_100_0.5")
+    # GeneticAl(100, 40, 50, 0.5, [[-5, 10], [0, 15]], y, 'min', graph=True, graph_show=False, label="100_40_0.5")
+    # GeneticAl(20, 40, 50, 1, [[-5, 10], [0, 15]], y, 'min', graph=True, graph_show=False, label="20_40_1", save_loc="./Lab1/Images/Branin Function.png")
     # GeneticAl(20, 40, 50, 0.5, [[-5, 10], [0, 15]], y, 'min', graph=False, animation=True, animation_show=False, save_loc="./Lab1/Images/Branin Function.gif", fps=10)
 
     def y(x1, x2):
         return -np.cos(x1)*np.cos(x2)*np.exp(-(x1-np.pi)**2-(x2-np.pi)**2)
-    GeneticAl(20, 100, 50, 0.5, [[-100, 100], [-100, 100]], y, 'min', graph=True, graph_show=False, label="20_100_0.5")
-    GeneticAl(100, 40, 50, 0.5, [[-100, 100], [-100, 100]], y, 'min', graph=True, graph_show=False, label="100_40_0.5")
-    GeneticAl(20, 40, 50, 1, [[-100, 100], [-100, 100]], y, 'min', graph=True, graph_show=False, label="20_40_1", save_loc="./Lab1/Images/Easom function.png")
+    # GeneticAl(20, 100, 50, 0.5, [[-100, 100], [-100, 100]], y, 'min', graph=True, graph_show=False, label="20_100_0.5")
+    # GeneticAl(100, 40, 50, 0.5, [[-100, 100], [-100, 100]], y, 'min', graph=True, graph_show=False, label="100_40_0.5")
+    # GeneticAl(20, 40, 50, 1, [[-100, 100], [-100, 100]], y, 'min', graph=True, graph_show=False, label="20_40_1", save_loc="./Lab1/Images/Easom function.png")
     # GeneticAl(20, 40, 50, 0.5, [[-100, 100], [-100, 100]], y, 'min', graph=False, animation=True, animation_show=False, save_loc="./Lab1/Images/Easom function.gif", fps=10)
+    GeneticAl(20, 40, 50, 0.5, [[-100, 100], [-100, 100]], y, 'min', graph=True, animation=True, animation_show=True, fps=10)
 
-    def y(x1, x2):
-        return (x1 + x2)*((x1*x2)/3)**2
-    GeneticAl(20, 100, 50, 0.5, [[-100, 100], [-100, 100]], y, 'min', graph=True, graph_show=False, label="20_100_0.5")
-    GeneticAl(100, 40, 50, 0.5, [[-100, 100], [-100, 100]], y, 'min', graph=True, graph_show=False, label="100_40_0.5")
-    GeneticAl(20, 40, 50, 1, [[-100, 100], [-100, 100]], y, 'min', graph=True, graph_show=False, label="20_40_1", save_loc="./Lab1/Images/Test.png")
+    # def y(x1, x2):
+    #     return (x1 + x2)*((x1*x2)/3)**2
+    # GeneticAl(20, 100, 50, 0.5, [[-100, 100], [-100, 100]], y, 'min', graph=True, graph_show=False, label="20_100_0.5")
+    # GeneticAl(100, 40, 50, 0.5, [[-100, 100], [-100, 100]], y, 'min', graph=True, graph_show=False, label="100_40_0.5")
+    # GeneticAl(20, 40, 50, 1, [[-100, 100], [-100, 100]], y, 'min', graph=True, graph_show=False, label="20_40_1", save_loc="./Lab1/Images/Test.png")
     # GeneticAl(20, 40, 50, 0.5, [[-100, 100], [-100, 100]], y, 'min', graph=False, animation=True, animation_show=False, save_loc="./Lab1/Images/Test.gif", fps=10)
+    # GeneticAl(20, 40, 50, 0.5, [[-100, 100], [-100, 100]], y, 'min', graph=False, animation=True, animation_show=True, fps=10)
 
-    def y(x1, x2):
-        return ((1+(x1+x2+1)**2*(19-14*x1+3*x1**2-14*x2+6*x1*x2+3*x2**2)) * (30+(2*x1-3*x2)**2*(18-32*x1+12*x1**2+48*x2-36*x1*x2+27*x2**2)))
-    GeneticAl(20, 100, 50, 0.5, [[-2, 2], [-2, 2]], y, 'min', graph=True, graph_show=False, label="20_100_0.5")
-    GeneticAl(100, 40, 50, 0.5, [[-2, 2], [-2, 2]], y, 'min', graph=True, graph_show=False, label="100_40_0.5")
-    GeneticAl(20, 40, 50, 1, [[-2, 2], [-2, 2]], y, 'min', graph=True, graph_show=False, label="20_40_1", save_loc="./Lab1/Images/The Goldstein-Price function.png")
+    # def y(x1, x2):
+    #     return ((1+(x1+x2+1)**2*(19-14*x1+3*x1**2-14*x2+6*x1*x2+3*x2**2)) * (30+(2*x1-3*x2)**2*(18-32*x1+12*x1**2+48*x2-36*x1*x2+27*x2**2)))
+    # GeneticAl(20, 100, 50, 0.5, [[-2, 2], [-2, 2]], y, 'min', graph=True, graph_show=False, label="20_100_0.5")
+    # GeneticAl(100, 40, 50, 0.5, [[-2, 2], [-2, 2]], y, 'min', graph=True, graph_show=False, label="100_40_0.5")
+    # GeneticAl(20, 40, 50, 1, [[-2, 2], [-2, 2]], y, 'min', graph=True, graph_show=False, label="20_40_1", save_loc="./Lab1/Images/The Goldstein-Price function.png")
     # GeneticAl(20, 40, 50, 0.5, [[-2, 2], [-2, 2]], y, 'min', graph=False, animation=True, animation_show=False, save_loc="./Lab1/Images/The Goldstein-Price function.gif", fps=10)
+    # GeneticAl(20, 40, 50, 0.5, [[-2, 2], [-2, 2]], y, 'min', graph=False, animation=True, animation_show=True, fps=10)
 
-    def y(x1, x2):
-        return ((4-2.1*x1**2+(x1**4)/3)*x1**2+x1*x2+(-4+4*x2**2)*x2**2)
-    GeneticAl(20, 100, 50, 0.5, [[-3, 3], [-2, 2]], y, 'min', graph=True, graph_show=False, label="20_100_0.5")
-    GeneticAl(100, 40, 50, 0.5, [[-3, 3], [-2, 2]], y, 'min', graph=True, graph_show=False, label="100_40_0.5")
-    GeneticAl(20, 40, 50, 1, [[-3, 3], [-2, 2]], y, 'min', graph=True, graph_show=False, label="20_40_1", save_loc="./Lab1/Images/six-hump Camel function.png")
+    # def y(x1, x2):
+    #     return ((4-2.1*x1**2+(x1**4)/3)*x1**2+x1*x2+(-4+4*x2**2)*x2**2)
+    # GeneticAl(20, 100, 50, 0.5, [[-3, 3], [-2, 2]], y, 'min', graph=True, graph_show=False, label="20_100_0.5")
+    # GeneticAl(100, 40, 50, 0.5, [[-3, 3], [-2, 2]], y, 'min', graph=True, graph_show=False, label="100_40_0.5")
+    # GeneticAl(20, 40, 50, 1, [[-3, 3], [-2, 2]], y, 'min', graph=True, graph_show=False, label="20_40_1", save_loc="./Lab1/Images/six-hump Camel function.png")
     # GeneticAl(20, 40, 50, 0.5, [[-3, 3], [-2, 2]], y, 'min', graph=False, animation=True, animation_show=False, save_loc="./Lab1/Images/six-hump Camel function.gif", fps=10)
