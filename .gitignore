@@ -4,3 +4,11 @@
 *.log
 *.synctex.gz
 *.toc
+*.run.xml
+*.out
+*.bbl
+*.blg
+*.bcf
+*.bbl-SAVE-ERROR
+.env
+*.keras
