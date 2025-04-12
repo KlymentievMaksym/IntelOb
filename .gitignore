@@ -12,3 +12,8 @@
 *.bbl-SAVE-ERROR
 .env
 *.keras
+
+*Lego*
+*coil-100*
+*.zip
+*.tar.gz
