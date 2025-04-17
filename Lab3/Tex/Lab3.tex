@@ -352,32 +352,32 @@
 
     \section{Результати порівняння.}
     \begin{table}[h!]
-        \begin{tabular}{| c | c | c | c | c | c | c | c |}
+        \begin{tabular}{| c | c | c | c | c | c | c | c | c | c |}
             \hline
-            Опис & Dropout & More Conv2D & Accuracy & Loss & Training Time & Top2 & Activation Func \\
+            Опис & Dropout & +Conv2D & Acc & Loss & Tr. Time & Top2 & Activ. Func & Learn Rate & Epoch \\
             \hline
-            Базова & - & - & 99 & 13 & 19 & 1 & Relu \\
+            Базова & - & - & 99.6 & 13 & 19 & 1 & Relu & 0.001 & 10 \\
             \hline
-            Run №2 & + & - & 99 & 9 & 29 & 1 & Relu \\
+            Run №2 & + & - & 99.9 & 9 & 29 & 1 & Relu & 0.001 & 10 \\
             \hline
-            Run №3 & - & - & 99 & 11 & 9 & 1 & Relu \\
+            Run №3 & - & - & 99.8 & 11 & 9 & 1 & Relu & 0.001 & 10 \\
             \hline
-            Run №4 & + & - & 0 & 0 & 0 & 0 & Relu \\
+            Run №4 & + & - & 99.9 & 8 & 13 & 0.99 & Relu & 0.001 & 10 \\
             \hline
-            Run №5 & - & + & 0 & 0 & 0 & 0 & Relu \\
+            Run №5 & - & + & 100 & 0 & 21 & 1 & Relu & 0.001 & 30 \\
             \hline
-            Run №6 & + & + & 0 & 0 & 0 & 0 & Relu \\
+            Run №6 & + & + & 99.9 & 0 & 21 & 1 & Relu & 0.001 & 30 \\
             \hline
-            Run №7 & - & - & 0 & 0 & 0 & 0 & Elu \\
+            Run №7 & - & - & 99.1 & 13 & 35 & 1 & Elu & 0.001 & 10 \\
             \hline
-            Run №8 & - & - & 0 & 0 & 0 & 0 & Gelu \\
+            Run №8 & - & - & 99.6 & 17 & 38 & 1 & Gelu & 0.001 & 10 \\
             \hline
-            Run №9 & - & - & 0 & 0 & 0 & 0 & Gelu \\
+            Run №9 & - & - & 95.8 & 180 & 50 & 0.98 & Gelu & 0.00001 & 10 \\
             \hline
         \end{tabular}
     \end{table}
 
     \section{Висновки.}
-    Базва версія є найкращою
+    Полегшена Базова версія (Тобто Conv2D 32 замість Conv2D 64)(Run №4) є кращою бо швидко збігаються точність та втрати валідаційного та тренувального даних, має високу точність та малі втрати
 
 \end{document}
