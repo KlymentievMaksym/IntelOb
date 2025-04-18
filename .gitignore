@@ -13,6 +13,8 @@
 .env
 *.keras
 
+*/Data/Images*
+*indoorCVPR_09*
 *Lego*
 *coil-100*
 *.zip
