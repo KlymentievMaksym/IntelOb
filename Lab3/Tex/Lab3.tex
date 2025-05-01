@@ -28,7 +28,7 @@
     \newpage
 
     \section{Опис набору даних. Візуалізація прикладів з набору даних.}
-    \textbf{100} різних об'єктів, зображених з кутом обертання --- \textbf{від 0 до 360 з кроком 5}
+    \textbf{67} внутрішніх помешкань --- \textbf{від Аеропорту до Винного погребу}
 
     \includegraphics[width=\textwidth]{Types.png}
     \newpage
@@ -36,170 +36,55 @@
     \section{Опис базової архітектури.}
     \subsection{Архітектура нейронної мережі, кількість параметрів.}
     \begin{enumerate}
-        \item 1 Conv2D 64:
+        \item 1 Conv2D 32:
             \begin{table}[h!]
+                \centering
                 \begin{tabular}{| c | c | c |}
                     \hline
                     Layer (type) & Output Shape & Param \\
                     \hline
-                    conv2d & (None, 64, 64, 64) & 1,792 \\
+                    conv2d & (None, 128, 128, 32) & 896 \\
                     \hline
-                    batch\_normalization & (None, 64, 64, 64) & 256 \\
+                    batch\_normalization & (None, 128, 128, 32) & 128 \\
                     \hline
-                    max\_pooling2d & (None, 16, 16, 64) & 0 \\
+                    max\_pooling2d & (None, 32, 32, 32) & 0 \\
                     \hline
-                    flatten & (None, 16384) & 0 \\
+                    flatten & (None, 32768) & 0 \\
                     \hline
-                    dense & (None, 256) &  4,194,560 \\
-                    \hline
-                    dense & (None, 100) &  25,700 \\
-                    \hline
-                \end{tabular}
-            \end{table}
-
-            Total params: 4,222,308 (16.11 MB)
-
-            Trainable params: 4,222,180 (16.11 MB)
-
-            Non-trainable params: 128 (512.00 B)
-        
-            \item 1 Conv2D 64 + Dropout:
-            \begin{table}[h!]
-                \begin{tabular}{| c | c | c |}
-                    \hline
-                    Layer (type) & Output Shape & Param \\
-                    \hline
-                    conv2d & (None, 64, 64, 64) & 1,792 \\
-                    \hline
-                    batch\_normalization & (None, 64, 64, 64) & 256 \\
-                    \hline
-                    max\_pooling2d & (None, 16, 16, 64) & 0 \\
-                    \hline
-                    flatten & (None, 16384) & 0 \\
-                    \hline
-                    dense & (None, 256) &  4,194,560 \\
+                    dense & (None, 256) & 8,388,864 \\
                     \hline
                     dropout & (None, 256) & 0 \\
                     \hline
-                    dense & (None, 100) &  25,700 \\
+                    dense & (None, 67) & 17,219 \\
                     \hline
                 \end{tabular}
             \end{table}
-
-            Total params: 4,222,308 (16.11 MB)
-
-            Trainable params: 4,222,180 (16.11 MB)
-
-            Non-trainable params: 128 (512.00 B)
         
-        \newpage
-            \item 1 Conv2D 32:
-            \begin{table}[h!]
-                \begin{tabular}{| c | c | c |}
-                    \hline
-                    Layer (type) & Output Shape & Param \\
-                    \hline
-                    conv2d & (None, 64, 64, 32) & 896 \\
-                    \hline
-                    batch\_normalization & (None, 64, 64, 32) & 128 \\
-                    \hline
-                    max\_pooling2d & (None, 16, 16, 32) & 0 \\
-                    \hline
-                    flatten & (None, 8192) & 0 \\
-                    \hline
-                    dense & (None, 256) & 2,097,408 \\
-                    \hline
-                    dense & (None, 100) &  25,700 \\
-                    \hline
-                \end{tabular}
-            \end{table}
-
-            Total params: 2,124,132 (8.10 MB)
-
-            Trainable params: 2,124,068 (8.10 MB)
-
+            Total params: 8,407,107 (32.07 MB)
+        
+            Trainable params: 8,407,043 (32.07 MB)
+        
             Non-trainable params: 64 (256.00 B)
+    
         
-            \item 1 Conv2D 32 + Dropout:
+        \item 2 Conv2D 32-32:
             \begin{table}[h!]
+                \centering
                 \begin{tabular}{| c | c | c |}
                     \hline
                     Layer (type) & Output Shape & Param \\
                     \hline
-                    conv2d & (None, 64, 64, 32) & 896 \\
+                    conv2d & (None, 128, 128, 32) & 896 \\
                     \hline
-                    batch\_normalization & (None, 64, 64, 32) & 128 \\
+                    batch\_normalization & (None, 128, 128, 32) & 128 \\
                     \hline
-                    max\_pooling2d & (None, 16, 16, 32) & 0 \\
+                    max\_pooling2d & (None, 32, 32, 32) & 0 \\
                     \hline
-                    flatten & (None, 8192) & 0 \\
+                    conv2d & (None, 32, 32, 32) & 9,248 \\
                     \hline
-                    dense & (None, 256) & 2,097,408 \\
+                    batch\_normalization & (None, 32, 32, 32) & 128 \\
                     \hline
-                    dropout & (None, 256) & 0 \\
-                    \hline
-                    dense & (None, 100) &  25,700 \\
-                    \hline
-                \end{tabular}
-            \end{table}
-
-            Total params: 2,124,132 (8.10 MB)
-
-            Trainable params: 2,124,068 (8.10 MB)
-
-            Non-trainable params: 64 (256.00 B)
-        
-        \newpage
-            \item 2 Conv2D:
-            \begin{table}[h!]
-                \begin{tabular}{| c | c | c |}
-                    \hline
-                    Layer (type) & Output Shape & Param \\
-                    \hline
-                    conv2d & (None, 64, 64, 64) & 1,792 \\
-                    \hline
-                    batch\_normalization & (None, 64, 64, 64) & 256 \\
-                    \hline
-                    max\_pooling2d & (None, 16, 16, 64) & 0 \\
-                    \hline
-                    conv2d & (None, 64, 64, 128) & 73,856 \\
-                    \hline
-                    batch\_normalization & (None, 64, 64, 128) & 512 \\
-                    \hline
-                    max\_pooling2d & (None, 16, 16, 128) & 0 \\
-                    \hline
-                    flatten & (None, 2048) & 0 \\
-                    \hline
-                    dense & (None, 256) & 524,544 \\
-                    \hline
-                    dense & (None, 100) &  25,700 \\
-                    \hline
-                \end{tabular}
-            \end{table}
-
-            Total params: 626,660 (2.39 MB)
-
-            Trainable params: 626,276 (2.39 MB)
-            
-            Non-trainable params: 384 (1.50 KB)
-        
-            \item 2 Conv2D + Dropout:
-            \begin{table}[h!]
-                \begin{tabular}{| c | c | c |}
-                    \hline
-                    Layer (type) & Output Shape & Param \\
-                    \hline
-                    conv2d & (None, 64, 64, 64) & 1,792 \\
-                    \hline
-                    batch\_normalization & (None, 64, 64, 64) & 256 \\
-                    \hline
-                    max\_pooling2d & (None, 16, 16, 64) & 0 \\
-                    \hline
-                    conv2d & (None, 64, 64, 128) & 73,856 \\
-                    \hline
-                    batch\_normalization & (None, 64, 64, 128) & 512 \\
-                    \hline
-                    max\_pooling2d & (None, 16, 16, 128) & 0 \\
+                    max\_pooling2d & (None, 8, 8, 32) & 0 \\
                     \hline
                     flatten & (None, 2048) & 0 \\
                     \hline
@@ -207,105 +92,301 @@
                     \hline
                     dropout & (None, 256) & 0 \\
                     \hline
-                    dense & (None, 100) &  25,700 \\
+                    dense & (None, 67) & 17,219 \\
                     \hline
                 \end{tabular}
             \end{table}
 
-            Total params: 626,660 (2.39 MB)
+            Total params: 552,163 (2.11 MB)
 
-            Trainable params: 626,276 (2.39 MB)
+            Trainable params: 552,035 (2.11 MB)
 
-            Non-trainable params: 384 (1.50 KB)
+            Non-trainable params: 128 (512.00 B)
+
+        
+        \newpage
+        \item 3 Conv2D 32-32-32:
+            \begin{table}[h!]
+                \centering
+                \begin{tabular}{| c | c | c |}
+                    \hline
+                    Layer (type) & Output Shape & Param \\
+                    \hline
+                    conv2d & (None, 128, 128, 32) & 896 \\
+                    \hline
+                    batch\_normalization & (None, 128, 128, 32) & 128 \\
+                    \hline
+                    max\_pooling2d & (None, 32, 32, 32) & 0 \\
+                    \hline
+                    conv2d & (None, 32, 32, 32) & 9,248 \\
+                    \hline
+                    batch\_normalization & (None, 32, 32, 32) & 128 \\
+                    \hline
+                    max\_pooling2d & (None, 8, 8, 32) & 0 \\
+                    \hline
+                    conv2d & (None, 8, 8, 32) & 9,248 \\
+                    \hline
+                    batch\_normalization & (None, 8, 8, 32) & 128 \\
+                    \hline
+                    max\_pooling2d & (None, 2, 2, 32) & 0 \\
+                    \hline
+                    flatten & (None, 128) & 0 \\
+                    \hline
+                    dense & (None, 256) & 33,024 \\
+                    \hline
+                    dropout & (None, 256) & 0 \\
+                    \hline
+                    dense & (None, 67) & 17,219 \\
+                    \hline
+                \end{tabular}
+            \end{table}
+        
+            Total params: 70,147 (274.40 KB)
+        
+            Trainable params: 70,019 (273.91 KB)
+        
+            Non-trainable params: 128 (512.00 B)
+    
+        
+            \item 3 Conv2D 32-64-128:
+                \begin{table}[h!]
+                    \centering
+                    \begin{tabular}{| c | c | c |}
+                        \hline
+                        Layer (type) & Output Shape & Param \\
+                        \hline
+                        conv2d & (None, 128, 128, 32) & 896 \\
+                        \hline
+                        batch\_normalization & (None, 128, 128, 32) & 128 \\
+                        \hline
+                        max\_pooling2d & (None, 32, 32, 32) & 0 \\
+                        \hline
+                        conv2d & (None, 32, 32, 64) & 18,496 \\
+                        \hline
+                        batch\_normalization & (None, 32, 32, 64) & 256 \\
+                        \hline
+                        max\_pooling2d & (None, 8, 8, 64) & 0 \\
+                        \hline
+                        conv2d & (None, 8, 8, 128) & 73,856 \\
+                        \hline
+                        batch\_normalization & (None, 8, 8, 128) & 512 \\
+                        \hline
+                        max\_pooling2d & (None, 2, 2, 128) & 0 \\
+                        \hline
+                        flatten & (None, 512) & 0 \\
+                        \hline
+                        dense & (None, 256) & 131,328 \\
+                        \hline
+                        dropout & (None, 256) & 0 \\
+                        \hline
+                        dense & (None, 67) & 17,219 \\
+                        \hline
+                    \end{tabular}
+                \end{table}
+
+                Total params: 242,691 (948.01 KB)
+
+                Trainable params: 242,243 (946.26 KB)
+
+                Non-trainable params: 448 (1.75 KB)
+
+        
+        \newpage
+        \item 6 Conv2D 32-64-128-256:
+            \begin{table}[h!]
+                \centering
+                \begin{tabular}{| c | c | c |}
+                    \hline
+                    Layer (type) & Output Shape & Param \# \\
+                    \hline
+                    conv2d & (None, 128, 128, 32) & 896 \\
+                    \hline
+                    batch\_normalization & (None, 128, 128, 32) & 128 \\
+                    \hline
+                    max\_pooling2d & (None, 64, 64, 32) & 0 \\
+                    \hline
+                    conv2d & (None, 64, 64, 64) & 18,496 \\
+                    \hline
+                    batch\_normalization & (None, 64, 64, 64) & 256 \\
+                    \hline
+                    conv2d & (None, 64, 64, 64) & 36,928 \\
+                    \hline
+                    batch\_normalization & (None, 64, 64, 64) & 256 \\
+                    \hline
+                    max\_pooling2d & (None, 32, 32, 64) & 0 \\
+                    \hline
+                    dropout & (None, 32, 32, 64) & 0 \\
+                    \hline
+                    conv2d & (None, 32, 32, 128) & 73,856 \\
+                    \hline
+                    batch\_normalization & (None, 32, 32, 128) & 512 \\
+                    \hline
+                    conv2d & (None, 32, 32, 128) & 147,584 \\
+                    \hline
+                    batch\_normalization & (None, 32, 32, 128) & 512 \\
+                    \hline
+                    max\_pooling2d & (None, 8, 8, 128) & 0 \\
+                    \hline
+                    dropout & (None, 8, 8, 128) & 0 \\
+                    \hline
+                    conv2d & (None, 8, 8, 256) & 295,168 \\
+                    \hline
+                    batch\_normalization & (None, 8, 8, 256) & 1,024 \\
+                    \hline
+                    max\_pooling2d & (None, 2, 2, 256) & 0 \\
+                    \hline
+                    flatten & (None, 1024) & 0 \\
+                    \hline
+                    dense & (None, 256) & 262,400 \\
+                    \hline
+                    dropout & (None, 256) & 0 \\
+                    \hline
+                    dense & (None, 67) & 17,219 \\
+                    \hline
+                \end{tabular}
+            \end{table}
+        
+            Total params: 855,235 (3.26 MB)
+        
+            Trainable params: 853,891 (3.26 MB)
+        
+            Non-trainable params: 1,344 (5.25 KB)
+    
         
         \newpage
 
-            \item Elu:
-            \begin{table}[h!]
-                \begin{tabular}{| c | c | c |}
-                    \hline
-                    Layer (type) & Output Shape & Param \\
-                    \hline
-                    conv2d & (None, 64, 64, 64) & 1,792 \\
-                    \hline
-                    batch\_normalization & (None, 64, 64, 64) & 256 \\
-                    \hline
-                    max\_pooling2d & (None, 16, 16, 64) & 0 \\
-                    \hline
-                    flatten & (None, 16384) & 0 \\
-                    \hline
-                    dense & (None, 256) &  4,194,560 \\
-                    \hline
-                    dense & (None, 100) &  25,700 \\
-                    \hline
-                \end{tabular}
-            \end{table}
+            \item 9 Conv2D 32-64-128-256:
+                \begin{table}[h!]
+                    \centering
+                    \begin{tabular}{|c|c|c|}
+                        \hline
+                        Layer (type) & Output Shape & Param \# \\
+                        \hline
+                        conv2d & (None, 128, 128, 32) & 896 \\
+                        \hline
+                        batch\_normalization & (None, 128, 128, 32) & 128 \\
+                        \hline
+                        conv2d & (None, 128, 128, 32) & 9,248 \\
+                        \hline
+                        batch\_normalization & (None, 128, 128, 32) & 128 \\
+                        \hline
+                        max\_pooling2d & (None, 64, 64, 32) & 0 \\
+                        \hline
+                        conv2d & (None, 64, 64, 64) & 18,496 \\
+                        \hline
+                        batch\_normalization & (None, 64, 64, 64) & 256 \\
+                        \hline
+                        conv2d & (None, 64, 64, 64) & 36,928 \\
+                        \hline
+                        batch\_normalization & (None, 64, 64, 64) & 256 \\
+                        \hline
+                        conv2d & (None, 64, 64, 64) & 36,928 \\
+                        \hline
+                        batch\_normalization & (None, 64, 64, 64) & 256 \\
+                        \hline
+                        max\_pooling2d & (None, 32, 32, 64) & 0 \\
+                        \hline
+                        dropout & (None, 32, 32, 64) & 0 \\
+                        \hline
+                        conv2d & (None, 32, 32, 128) & 73,856 \\
+                        \hline
+                        batch\_normalization & (None, 32, 32, 128) & 512 \\
+                        \hline
+                        conv2d & (None, 32, 32, 128) & 147,584 \\
+                        \hline
+                        batch\_normalization & (None, 32, 32, 128) & 512 \\
+                        \hline
+                        conv2d & (None, 32, 32, 128) & 147,584 \\
+                        \hline
+                        batch\_normalization & (None, 32, 32, 128) & 512 \\
+                        \hline
+                        max\_pooling2d & (None, 8, 8, 128) & 0 \\
+                        \hline
+                        dropout & (None, 8, 8, 128) & 0 \\
+                        \hline
+                        conv2d & (None, 8, 8, 256) & 295,168 \\
+                        \hline
+                        batch\_normalization & (None, 8, 8, 256) & 1,024 \\
+                        \hline
+                        conv2d & (None, 8, 8, 256) & 590,080 \\
+                        \hline
+                        batch\_normalization & (None, 8, 8, 256) & 1,024 \\
+                        \hline
+                        max\_pooling2d & (None, 2, 2, 256) & 0 \\
+                        \hline
+                        flatten & (None, 1024) & 0 \\
+                        \hline
+                        dense & (None, 256) & 262,400 \\
+                        \hline
+                        dropout & (None, 256) & 0 \\
+                        \hline
+                        dense & (None, 67) & 17,219 \\
+                        \hline
+                    \end{tabular}
+                \end{table}
 
-            Total params: 4,222,308 (16.11 MB)
+                Total params: 1,640,995 (6.26 MB)
 
-            Trainable params: 4,222,180 (16.11 MB)
+                Trainable params: 1,638,691 (6.25 MB)
 
-            Non-trainable params: 128 (512.00 B)
+                Non-trainable params: 2,304 (9.00 KB)
+
+
         
-            \item Gelu:
+        \newpage
+
+        \item 3 Conv2D 128-256-512:
             \begin{table}[h!]
-                \begin{tabular}{| c | c | c |}
+                \centering
+                \begin{tabular}{|c|c|c|}
                     \hline
-                    Layer (type) & Output Shape & Param \\
+                    Layer (type) & Output Shape & Param \# \\
                     \hline
-                    conv2d & (None, 64, 64, 64) & 1,792 \\
+                    conv2d & (None, 128, 128, 128) & 3,584 \\
                     \hline
-                    batch\_normalization & (None, 64, 64, 64) & 256 \\
+                    batch\_normalization & (None, 128, 128, 128) & 512 \\
                     \hline
-                    max\_pooling2d & (None, 16, 16, 64) & 0 \\
+                    max\_pooling2d & (None, 32, 32, 128) & 0 \\
                     \hline
-                    flatten & (None, 16384) & 0 \\
+                    conv2d & (None, 32, 32, 256) & 295,168 \\
                     \hline
-                    dense & (None, 256) &  4,194,560 \\
+                    batch\_normalization & (None, 32, 32, 256) & 1,024 \\
                     \hline
-                    dense & (None, 100) &  25,700 \\
+                    max\_pooling2d & (None, 8, 8, 256) & 0 \\
+                    \hline
+                    dropout & (None, 8, 8, 256) & 0 \\
+                    \hline
+                    conv2d & (None, 8, 8, 512) & 1,180,160 \\
+                    \hline
+                    batch\_normalization & (None, 8, 8, 512) & 2,048 \\
+                    \hline
+                    max\_pooling2d & (None, 2, 2, 512) & 0 \\
+                    \hline
+                    dropout & (None, 2, 2, 512) & 0 \\
+                    \hline
+                    flatten & (None, 2048) & 0 \\
+                    \hline
+                    dense & (None, 1024) & 2,098,176 \\
+                    \hline
+                    dropout & (None, 1024) & 0 \\
+                    \hline
+                    dense & (None, 67) & 68,675 \\
                     \hline
                 \end{tabular}
             \end{table}
-
-            Total params: 4,222,308 (16.11 MB)
-
-            Trainable params: 4,222,180 (16.11 MB)
-
-            Non-trainable params: 128 (512.00 B)
         
-            \item Gelu + Learning Rate:
-            \begin{table}[h!]
-                \begin{tabular}{| c | c | c |}
-                    \hline
-                    Layer (type) & Output Shape & Param \\
-                    \hline
-                    conv2d & (None, 64, 64, 64) & 1,792 \\
-                    \hline
-                    batch\_normalization & (None, 64, 64, 64) & 256 \\
-                    \hline
-                    max\_pooling2d & (None, 16, 16, 64) & 0 \\
-                    \hline
-                    flatten & (None, 16384) & 0 \\
-                    \hline
-                    dense & (None, 256) &  4,194,560 \\
-                    \hline
-                    dense & (None, 100) &  25,700 \\
-                    \hline
-                \end{tabular}
-            \end{table}
-
-            Total params: 4,222,308 (16.11 MB)
-
-            Trainable params: 4,222,180 (16.11 MB)
-
-            Non-trainable params: 128 (512.00 B)
+            Total params: 3,649,347 (13.92 MB)
+        
+            Trainable params: 3,647,555 (13.91 MB)
+        
+            Non-trainable params: 1,792 (7.00 KB)
+    
 \end{enumerate}
 
 \newpage
     \subsection{Точність класифікації.}
 
-    \foreach \x in {1,2,...,9}
+    \foreach \x in {1,2,...,7}
     {
         \begin{figure}[H]
             \centering
@@ -317,7 +398,7 @@
     \newpage
     \subsection{Візуалізація функцій втрат (тестовий та тренінговий набір).}
 
-    \foreach \x in {1,2,...,9}
+    \foreach \x in {1,2,...,7}
     {
         \begin{figure}[H]
             \centering
@@ -332,52 +413,49 @@
     \section{Опис експериментів.}
     \subsection{Які зміни було внесено.}
     \begin{itemize}
-        \item Базова версія - 1 Conv2D 64
-        \item Run №2 - 1 Conv2D 64 + Dropout
+        \item Базова версія - 1 Conv2D 32
+        \item Run №2 - 2 Conv2D 32-32
 
-        \item Run №3 - 1 Conv2D 32
-        \item Run №4 - 1 Conv2D 32 + Dropout
+        \item Run №3 - 3 Conv2D 32-32-32
+        \item Run №4 - 3 Conv2D 32-64-128
 
-        \item Run №5 - 2 Conv2D
-        \item Run №6 - 2 Conv2D + Dropout
+        \item Run №5 - 6 Conv2D 32-64-128-256
+        \item Run №6 - 9 Conv2D 32-64-128-256
 
-        \item Run №7 - Elu
-        \item Run №8 - Gelu
+        \item Run №7 - 3 Conv2D 128-256-512
 
-        \item Run №9 - Gelu + Learning Rate
     \end{itemize}
 
     \subsection{Висновки: як це вплинуло на результат, процес тренування, ...}
-        Більше Conv2D потребує більше епох для того щоб отримати таку ж точність як для одного Conv2D
+        Більше Conv2D дає більше точності, але, скоріше за все, вище 50\% не отримати, треба ще використовувати щось окрім Conv2D, наприклад, збільшити розмір зображення.
 
     \section{Результати порівняння.}
     \begin{table}[h!]
-        \begin{tabular}{| c | c | c | c | c | c | c | c | c | c |}
+        \centering
+        \begin{tabular}{| c | c | c | c | c | c | c |}
             \hline
-            Опис & Dropout & +Conv2D & Acc & Loss & Tr. Time & Top2 & Activ. Func & Learn Rate & Epoch \\
+            Опис & Conv2D & Top2 & Acc & Loss & Epoch & Tr. Time \\
             \hline
-            Базова & - & - & 99.6 & 13 & 19 & 1 & Relu & 0.001 & 10 \\
+            Базова & 1 & 18 & 10 & 396 & 40 & 87 \\
             \hline
-            Run №2 & + & - & 99.9 & 9 & 29 & 1 & Relu & 0.001 & 10 \\
+            Run №2 & 2 & 38 & 25 & 363 & 40 & 77 \\
             \hline
-            Run №3 & - & - & 99.8 & 11 & 9 & 1 & Relu & 0.001 & 10 \\
+            Run №3 & 3 & 46 & 31 & 299 & 40 & 74 \\
             \hline
-            Run №4 & + & - & 99.9 & 8 & 13 & 0.99 & Relu & 0.001 & 10 \\
+            Run №4 & 3 & 47 & 33 & 363 & 40 & 80 \\
             \hline
-            Run №5 & - & + & 100 & 0 & 21 & 1 & Relu & 0.001 & 30 \\
+            Run №5 & 6 & 54 & 41 & 336 & 100 & 275 \\
             \hline
-            Run №6 & + & + & 99.9 & 0 & 21 & 1 & Relu & 0.001 & 30 \\
+            Run №6 & 9 & 52 & 39 & 419 & 70 & 468 \\
             \hline
-            Run №7 & - & - & 99.1 & 13 & 35 & 1 & Elu & 0.001 & 10 \\
+            Run №7 & 3 & 51 & 38 & 476 & 70 & 475 \\
             \hline
-            Run №8 & - & - & 99.6 & 17 & 38 & 1 & Gelu & 0.001 & 10 \\
-            \hline
-            Run №9 & - & - & 95.8 & 180 & 50 & 0.98 & Gelu & 0.00001 & 10 \\
+            Best №7 & 3 & 58 & 45 & 347 & 63 & 475 \\
             \hline
         \end{tabular}
     \end{table}
 
     \section{Висновки.}
-    Полегшена Базова версія (Тобто Conv2D 32 замість Conv2D 64)(Run №4) є кращою бо швидко збігаються точність та втрати валідаційного та тренувального даних, має високу точність та малі втрати
+    Найкраще, що вдалося отримати простою моделлю - 45\% точності, але з досить великими втратами.
 
 \end{document}
