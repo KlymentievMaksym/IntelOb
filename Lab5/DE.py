@@ -96,7 +96,7 @@ def DE(pop_size, iterations, function, limits, **kwargs):
             mutant_vector[r < P] = population[i][r < P]
             if function(population[i]) > function(mutant_vector):
                 population[i] = mutant_vector
-        fitness = np.array([func(X) for X in population])
+        fitness = np.array([function(X) for X in population])
         el_min = np.argmin(fitness)
         if best_f > fitness[el_min]:
             best_f = fitness[el_min]

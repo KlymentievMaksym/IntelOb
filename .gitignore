@@ -18,3 +18,5 @@
 *coil-100*
 *.zip
 *.tar.gz
+
+*__pycache__*
