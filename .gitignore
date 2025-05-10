@@ -10,7 +10,7 @@
 *.blg
 *.bcf
 *.bbl-SAVE-ERROR
-.env
+*.env*
 
 */Data/Images*
 *indoorCVPR_09*

@@ -94,6 +94,9 @@ def DE(pop_size, iterations, function, limits, **kwargs):
                 x1, x2, x3 = np.random.choice(population.shape[0], size=3, replace=False)
             mutant_vector = population[x1] + F * (population[x2] - population[x3])
             mutant_vector[r < P] = population[i][r < P]
+            mutant_vector = np.clip(mutant_vector, x_low, x_high)
+            if (mutant_vector > x_high).any() or (mutant_vector < x_low).any():
+                print(mutant_vector)
             if function(population[i]) > function(mutant_vector):
                 population[i] = mutant_vector
         fitness = np.array([function(X) for X in population])
@@ -120,7 +123,7 @@ def DE(pop_size, iterations, function, limits, **kwargs):
 if __name__ == "__main__":
     def func(X):
         return np.sum(X**2)
-    func_limit = [[-4, 4]] * 2
+    func_limit = [[-1e2, 1e2]] * 2
 
     de = DE(100, 100, func, func_limit)
     print(de)
