@@ -32,10 +32,14 @@ uploaded_file = st.file_uploader("Upload a MIDI file", type=["mid", "midi"], acc
 with st.sidebar:
     generations = st.slider("Number of generations", 10, 2000, 10, step=10)
     population = st.slider("Population size", 10, 1000, 10, step=5)
-    mutation_rate = st.slider("Mutation rate", 0.0, 1.0, 0.1, step=0.05)
+    mutation_rate = st.slider("Mutation rate", 0.0, 1.0, 0.25, step=0.05)
 
     exactly_like_original = st.slider("Exactly Like Original", 0.0, 1.0, 1.0, step=0.05)
     chord_variety = st.slider("Chord Variety", 0.0, 1.0, 1.0, step=0.05)
+
+    repeating_in_raw = st.slider("Repeating in Raw", 0.0, 1.0, 1.0, step=0.05)
+    repeating_very_much = st.slider("Repeating Very Much", 0.0, 1.0, 1.0, step=0.05)
+
     harmonic_flow = st.slider("Harmonic Flow", 0.0, 1.0, 0.0, step=0.05)
     functional_harmony = st.slider("Functional Harmony", 0.0, 1.0, 0.0, step=0.05)
 
@@ -57,7 +61,8 @@ if uploaded_file:
         if st.button("🎶 Start Evolution"):
             # with st.status("🔎 Searching for best melody..."):
             weights = {
-                # "chord_melody_congruence": 0.4,
+                "chord_not_repeating_in_row": repeating_in_raw,
+                "chord_not_repeating_very_much": repeating_very_much,
                 "exactly_like_original": exactly_like_original,
                 "chord_variety": chord_variety,
                 "harmonic_flow": harmonic_flow,

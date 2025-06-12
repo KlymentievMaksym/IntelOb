@@ -25,50 +25,38 @@ class FitnessFunc:
             score += mse
         return score  #/ self.target_true.instruments_count
 
-        # for instrument_true, instrument_pred in zip(self.target_true.notes, target_pred.notes):
-        #     notes = instrument_true[-1]
-        #     notes_pred = instrument_pred[-1]
-        #     array_ = np.array(notes)
-        #     count_equal = np.count_nonzero(array_ == np.array(notes_pred))
-        #     maximum_amount = array_.shape[0] * array_.shape[1]
-        #     # print("count_equal", count_equal, "maximum_amount", maximum_amount)
-        #     score += count_equal/maximum_amount
-        # return score/target_pred.instruments_count
-
-    # def _chord_melody_congruence(self, target_pred: Melody):
-    #     score, melody_index = 0, 0
-    #     for chord in chord_sequence:
-    #         bar_duration = 0
-    #         while bar_duration < 4 and melody_index < len(
-    #             self.melody_data.notes
-    #         ):
-    #             pitch, duration = self.melody_data.notes[melody_index]
-    #             if pitch[0] in self.chord_mappings[chord]:
-    #                 score += duration
-    #             bar_duration += duration
-    #             melody_index += 1
-    #     return score / self.melody_data.duration
-
     def _chord_variety(self, target_pred: Melody):
         score = 0
         for pitches_true, pitches_pred in zip(self.target_true.pitches, target_pred.pitches):
             unique_pitches_true = np.unique(pitches_true)
             unique_pitches_pred = np.unique(pitches_pred)
             score += abs(len(unique_pitches_true) / len(pitches_true) - len(unique_pitches_pred) / len(pitches_pred))
-        # for instrument_true, instrument_pred in zip(self.target_true.notes, target_pred.notes):
-        #     notes = instrument_true[-1]
-        #     notes_pred = instrument_pred[-1]
-        #     unique_notes = set()
-        #     unique_notes_pred = set()
-        #     for note, note_pred in zip(notes, notes_pred):
-        #         unique_notes.add(note[1])
-        #         unique_notes_pred.add(note_pred[1])
-        #     unique_chords = len(unique_notes)
-        #     total_chords = len(notes)
-        #     unique_chords_pred = len(unique_notes_pred)
-        #     total_chords_pred = len(notes_pred)
-        #     summ += 1 - (unique_chords / total_chords - unique_chords_pred / total_chords_pred)
         return score  #/ target_pred.instruments_count
+
+    def _chord_not_repeating_in_row(self, target_pred: Melody):
+        score = 0
+        for pitches_pred in target_pred.pitches:
+            prev_pitch = None
+            for pitch in pitches_pred:
+                if pitch == prev_pitch:
+                    score += 1
+                prev_pitch = pitch
+        return score
+
+    def _chord_not_repeating_very_much(self, target_pred: Melody):
+        score = 0
+        for pitches_pred in target_pred.pitches:
+            prev_pitch = None
+            for pitch in pitches_pred:
+                if pitch == prev_pitch:
+                    score += 1
+                else:
+                    score = 0
+                prev_pitch = pitch
+                if score > 3:
+                    return score * 100
+        return score
+
 
     def _harmonic_flow(self, target_pred: Melody):
         score = 0

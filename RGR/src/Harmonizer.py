@@ -66,13 +66,6 @@ class GAHarmonizer:
         self.population = [child for index in range(0, len(parents), 2) for child in self._crossover(*parents[index:index + 2], parents[0])]
 
         for melody in self.population:
-            counter = [0]*12
-            for pitches in melody.pitches:  # A pitches for one isntrument
-                for pitch in pitches:  # A pitch
-                    counter[pitch % 12] += 1
-            main_note = np.argmax(counter)
-            main_note_neighbors = [main_note, (main_note+2) % 12, (main_note+4) % 12, (main_note+5) % 12, (main_note+7) % 12, (main_note+9) % 12, (main_note+11) % 12]
-            print("[?] Main Pitch Tonals", main_note_neighbors)
             self._mutation(melody)
 
     def _select_parents(self):
@@ -93,9 +86,36 @@ class GAHarmonizer:
         return pitches_return
 
     def _mutation(self, melody: Melody):
+        counter = [0]*12
+        for pitches in melody.pitches:  # A pitches for one isntrument
+            for pitch in pitches:  # A pitch
+                counter[pitch % 12] += 1
+        main_note = np.argmax(counter)
+        main_note_neighbors = np.array([main_note, (main_note+2) % 12, (main_note+4) % 12, (main_note+5) % 12, (main_note+7) % 12, (main_note+9) % 12, (main_note+11) % 12])
+        # print("[?] Main Pitch Tonals", main_note_neighbors)
+
+        dct = dict()
         for pitch_index in range(len(melody.pitches)):
-            indexes = np.random.choice(range(0, len(melody.pitches[pitch_index]) - 1), size=max(int(len(melody.pitches[pitch_index])*self.mutation_rate), 1), replace=False)
-            melody.pitches[pitch_index][indexes] = np.random.randint(MIN_PITCH, MAX_PITCH, size=len(indexes))
+            indexes = np.random.choice(range(0, len(melody.pitches[pitch_index]) - 1), size=max(int((len(melody.pitches[pitch_index])-1)*self.mutation_rate), 1), replace=False)
+            # melody.pitches[pitch_index][indexes] = np.random.randint(MIN_PITCH, MAX_PITCH, size=len(indexes))
+
+            for old_pitch_index in range(len(indexes)):
+                old_pitch = melody.pitches[pitch_index][indexes[old_pitch_index]]
+                already_exist = dct.get(old_pitch, None)
+                if not already_exist:
+                    values = np.array(range(old_pitch-12, old_pitch+12))
+
+                    # print("[?] Values shape", values.shape)
+                    mask = np.isin(values % 12, main_note_neighbors)
+                    probabilities = np.where(mask, 0.9 / np.count_nonzero(mask), 0.1 / np.count_nonzero(~mask))
+                    # print("[?] Sum of probabilities", sum(probabilities), "Exact probabilities", probabilities)
+
+                    new_pitch = np.clip(np.random.choice(values, p=probabilities), MIN_PITCH, MAX_PITCH)
+                    dct[old_pitch] = new_pitch
+                    melody.pitches[pitch_index][indexes[old_pitch_index]] = new_pitch
+                else:
+                    melody.pitches[pitch_index][indexes[old_pitch_index]] = already_exist
+
 
 
 """
