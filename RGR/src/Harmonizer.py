@@ -1,5 +1,6 @@
-import random
 import numpy as np
+from time import time
+
 from .Melody import Melody
 from .FitnessFunc import FitnessFunc
 
@@ -22,22 +23,33 @@ class GAHarmonizer:
         self.fitness_history = []
 
     def _create_initial_population(self):
-        shape = self.target.notes_count
         return [Melody(self.target.instruments, self._generate_initial_pitches(), self.target.other_info) for _ in range(self.pop_size)]
 
     def _generate_initial_pitches(self):
         return [np.random.randint(MIN_PITCH, MAX_PITCH, size=self.target.notes_count[index]) for index in range(len(self.target.pitches))]
 
     def evolve(self, generations: int = 100, progress_bar: object = None):
+        self.time_smooth = max(10, int(0.01*generations))
+        self.time_hist = np.zeros(self.time_smooth)
+        self.time_index = 0
+
+        self.prev_time = time()
+
         for generation in range(generations):
-            if progress_bar:
-                progress_bar.progress((generation + 1) / generations, text="🔎 Searching for best melody...")
-
             self._create_new_population()
-
             self._find_best_value("min")
-
             self.fitness_history.append(self.best_fitness)
+
+            self.new_time = time()
+            self.time_hist[self.time_index] = (self.new_time - self.prev_time) * (generations - generation - 1)
+            self.prev_time = self.new_time
+
+            self.time_index = (self.time_index + 1) % self.time_smooth
+            time_left = np.mean(self.time_hist)
+
+            if progress_bar:
+                progress_bar.progress((generation + 1) / generations, text=f"🔎 Searching... {(time_left//3600):.0f}h {(time_left//60 % 60):.0f}m {(time_left % 60):.0f}s")
+
             # print(f"[{generation}] Best fitness: {self.best_fitness}")
 
         return self.best_fitness, self.best_melody
@@ -115,76 +127,3 @@ class GAHarmonizer:
                     melody.pitches[pitch_index][indexes[old_pitch_index]] = new_pitch
                 else:
                     melody.pitches[pitch_index][indexes[old_pitch_index]] = already_exist
-
-
-
-"""
-class GAComposer:
-    def __init__(self, target, population_size=40, generations=50):
-        self.target = target
-        self.pop_size = population_size
-        self.generations = generations
-        self.population = self._init_population()
-        self.fitness_history = []
-
-    def _init_population(self):
-        length = len(self.target.notes)
-        if length == 0:
-            raise ValueError("Target melody has no notes. Cannot evolve.")
-        return [
-            Melody([
-                (random.randint(60, 72), i * 0.5, random.choice([0.25, 0.5, 1.0]))
-                for i in range(length)
-            ])
-            for _ in range(self.pop_size)
-        ]
-
-    def _fitness(self, melody):
-        tgt_int = self.target.intervals()
-        mel_int = melody.intervals()
-        pitch_score = -sum(abs(a - b) for a, b in zip(tgt_int, mel_int))
-
-        tgt_key = self.target.key_signature()
-        mel_key = melody.key_signature()
-        key_score = -abs(tgt_key - mel_key)
-
-        rhythm_score = -sum(abs(a[2] - b[2]) for a, b in zip(melody.notes, self.target.notes))
-
-        return pitch_score + key_score + rhythm_score
-
-    def _select_parents(self):
-        return sorted(self.population, key=self._fitness, reverse=True)[:2]
-
-    def _crossover(self, p1, p2):
-        notes = []
-        for n1, n2 in zip(p1.notes, p2.notes):
-            notes.append(n1 if random.random() < 0.5 else n2)
-        return Melody(notes)
-
-    def _mutate(self, melody, rate=0.1):
-        new_notes = []
-        for pitch, start, duration in melody.notes:
-            if random.random() < rate:
-                pitch += random.choice([-2, -1, 1, 2])
-                pitch = max(60, min(72, pitch))
-            if random.random() < rate:
-                duration = random.choice([0.25, 0.5, 1.0])
-            new_notes.append((pitch, start, duration))
-        return Melody(new_notes)
-
-    def evolve(self):
-        for _ in range(self.generations):
-            new_pop = []
-            best1, best2 = self._select_parents()
-            for _ in range(self.pop_size):
-                child = self._crossover(best1, best2)
-                child = self._mutate(child)
-                new_pop.append(child)
-            self.population = new_pop
-            best_fitness = self._fitness(self.best_melody())
-            self.fitness_history.append(best_fitness)
-        return self.best_melody()
-
-    def best_melody(self):
-        return max(self.population, key=self._fitness)
-# """

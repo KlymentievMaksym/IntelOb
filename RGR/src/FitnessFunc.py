@@ -1,7 +1,5 @@
 import numpy as np
 
-from collections import defaultdict
-
 from .Melody import Melody
 MIN_PITCH, MAX_PITCH = 36, 84
 
