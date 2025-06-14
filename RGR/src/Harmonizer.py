@@ -29,6 +29,8 @@ class GAHarmonizer:
         return [np.random.randint(MIN_PITCH, MAX_PITCH, size=self.target.notes_count[index]) for index in range(len(self.target.pitches))]
 
     def evolve(self, generations: int = 100, progress_bar: object = None):
+        # print("[!] Minimum pitch:", MIN_PITCH, "Maximum pitch:", MAX_PITCH)
+
         self.time_smooth = max(10, int(0.01*generations))
         self.time_hist = np.zeros(self.time_smooth)
         self.time_index = 0
@@ -89,12 +91,33 @@ class GAHarmonizer:
         return (Melody(self.target.instruments, self._notes_crossover(p1.pitches, p2.pitches), self.target.other_info) for p1, p2 in ((parent_1, parent_2), (parent_2, parent_1)))
 
     def _notes_crossover(self, pitches_1, pitches_2):
-        cross_points = np.random.randint(1, self.target.notes_count - 1)
         pitches_return = []
-        for cross_point_index in range(len(cross_points)):
-            pitch_1 = pitches_1[cross_point_index][:cross_points[cross_point_index]]
-            pitch_2 = pitches_2[cross_point_index][cross_points[cross_point_index]:]
-            pitches_return.append(np.concatenate((pitch_1, pitch_2)))
+        for instrument_count in range(len(self.target.notes_count)):
+            notes_count = self.target.notes_count[instrument_count]
+            
+            num_crosses = np.random.randint(1, notes_count // 2)
+            cross_points = np.sort(np.random.choice(range(1, notes_count - 1), size=num_crosses, replace=False))
+
+            sources = [pitches_1, pitches_2]
+            current_source = 0
+            cp_prev = 0
+            segments = []
+
+            for cp in cross_points:
+                segment = sources[current_source][instrument_count][cp_prev:cp]
+                segments.append(segment)
+                current_source = 1 - current_source
+                cp_prev = cp
+
+            segment = sources[current_source][instrument_count][cp_prev:]
+            segments.append(segment)
+
+            new_pitches = np.concatenate(segments)
+            if new_pitches.shape != pitches_1[instrument_count].shape:
+                raise ValueError(f"[Warning] Shape mismatch: got {new_pitches.shape}, expected {pitches_1[instrument_count].shape}")
+
+            pitches_return.append(new_pitches)
+
         return pitches_return
 
     def _mutation(self, melody: Melody):
@@ -115,7 +138,7 @@ class GAHarmonizer:
                 old_pitch = melody.pitches[pitch_index][indexes[old_pitch_index]]
                 already_exist = dct.get(old_pitch, None)
                 if not already_exist:
-                    values = np.array(range(old_pitch-12, old_pitch+12))
+                    values = np.array(range(old_pitch-2, old_pitch+3))
 
                     # print("[?] Values shape", values.shape)
                     mask = np.isin(values % 12, main_note_neighbors)

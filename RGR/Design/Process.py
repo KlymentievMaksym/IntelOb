@@ -6,12 +6,10 @@ from .HelpFunc import play_sound
 
 def process(melody: Melody):
     weights = {
-        "chord_not_repeating_in_row": st.session_state.repeating_in_raw,
-        "chord_not_repeating_very_much": st.session_state.repeating_very_much,
         "exactly_like_original": st.session_state.exactly_like_original,
         "chord_variety": st.session_state.chord_variety,
-        "harmonic_flow": st.session_state.harmonic_flow,
-        "functional_harmony": st.session_state.functional_harmony
+        "chord_not_repeating_in_row": st.session_state.repeating_in_raw,
+        "chord_not_repeating_very_much": st.session_state.repeating_very_much,
     }
 
     my_bar = st.progress(0, text="🔎 Searching for best melody...")

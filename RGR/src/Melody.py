@@ -1,8 +1,5 @@
-import os
 import numpy as np
-import tempfile
 import pretty_midi
-from collections import Counter
 
 
 class Melody:
@@ -47,7 +44,6 @@ class Melody:
             print(f"[?] Loading Instrument {instrument[0]}")
             inst = pretty_midi.Instrument(program=instrument[1], is_drum=instrument[2], name=instrument[0])
             for pitch, info in zip(pitches, other_info):
-                # if end - start > 0:
                 inst.notes.append(pretty_midi.Note(velocity=info[0], pitch=pitch, start=info[1], end=info[2]))
             pm.instruments.append(inst)
         return pm

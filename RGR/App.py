@@ -2,6 +2,11 @@ import streamlit as st
 
 import Design as des
 
+st.session_state.pitches = []
+st.session_state.waveforms = []
+st.session_state.mp3_bytes = []
+st.session_state.midi_bytes = []
+
 st.set_page_config(page_title="Genetic MIDI Composer", layout="centered")
 st.title("🎼 Music Composer")
 

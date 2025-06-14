@@ -5,9 +5,9 @@ from .Process import process
 
 def get_result_page():
     st.subheader("Original Melody")
-    create_audio_and_download_button(st.session_state.melody)
+    create_audio_and_download_button(st.session_state.melody, name="original_melody")
     st.subheader("Harmonized Melody")
-    create_audio_and_download_button(st.session_state.result[1])
+    create_audio_and_download_button(st.session_state.result[1], arg=1, changed=True, name="harmonized_melody")
 
     col1, col2, col3 = st.columns(3)
     with col1:
